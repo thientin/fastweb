@@ -17,8 +17,8 @@ class MySpider(CrawlSpider):
 
     urls = []
     login_url = 'http://www.fastweb.com/login'
-    login_user = 'xxx'
-    login_password = 'xxx'
+    login_user = 'dungle@goappable.com'
+    login_password = 'testing123'
 
     def start_requests(self):
         yield scrapy.Request(self.login_url, self.parse_login)
@@ -29,10 +29,17 @@ class MySpider(CrawlSpider):
         return scrapy.FormRequest(url, formdata = dict(data), method = method , callback = self.bypassad)
 
     def bypassad(self,response):
-        if response.url != "http://www.fastweb.com":
+        print "bypassadd ----->" + response.url
+        if response.url != "http://www.fastweb.com/":
             yield scrapy.Request(url="http://www.fastweb.com/",callback=self.start_crawl)
         else:
-            yield scrapy.Request(url="http://www.fastweb.com/",callback=self.start_crawl)
+            sel = Selector(response)
+            urls = sel.xpath("//p[@class='scholarship_name']/a/@href").extract()
+            print "urls after login -----> ", urls
+            for u in urls:
+                self.start_urls.append(response.urljoin(u))
+            for url in self.start_urls:
+                yield scrapy.Request(url=url, callback=self.parse_scholar)
     def start_crawl(self, response):
         print("response after login ----->", response)
 
