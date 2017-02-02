@@ -1,0 +1,9 @@
+install scrapy follow this link:
+https://doc.scrapy.org/en/latest/intro/install.html
+In order to crawl fastweb from this directory run this command:
+scrapy crawl fastweb
+
+Please make sure you have mongod up and running.
+All data crawled will be stored in fastweb database, scholars collection.
+Have fun.
+
