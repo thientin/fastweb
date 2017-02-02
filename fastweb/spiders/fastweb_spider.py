@@ -17,8 +17,8 @@ class MySpider(CrawlSpider):
 
     urls = []
     login_url = 'http://www.fastweb.com/login'
-    login_user = 'dungle@goappable.com'
-    login_password = 'testing123'
+    login_user = 'xxx'
+    login_password = 'xxx'
 
     def start_requests(self):
         yield scrapy.Request(self.login_url, self.parse_login)
